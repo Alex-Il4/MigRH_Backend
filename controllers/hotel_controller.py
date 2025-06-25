@@ -22,3 +22,26 @@ def get_hotels_by_ciudad(ciudad):
         return jsonify({'error': 'No se encontraron hoteles'})
     hotels_data = [hotel.to_dict() for hotel in hotels]
     return jsonify(hotels_data)
+
+@hotel_bp.route('/newhotel', methods=['POST'])
+def create_hotel():
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Falta información'}), 400
+    if not 'nombre_hotel' in data or not 'ciudad' in data or not 'tipoHotel' in data:
+        return jsonify({'error': 'Falta información en el formulario'}), 400
+    #Creando nuevo objeto de la clase Hotel
+    new_hotel = Hotel(
+        nombre_hotel=data['nombre_hotel'],
+        descripcion=data['descripcion'],
+        ciudad=data['ciudad'],
+        precio_por_noche=data['precio_por_noche'],
+        TipoHotel=data['tipoHotel'],
+        servicios_exclusivos=data['servicios_exclusivos'],
+        calificacion_estrellas=data['calificacion_estrellas'],
+        capacidad_maxima=data['capacidad_maxima'],
+        tematica=data['tematica']
+    )
+    db.session.add(new_hotel)
+    db.session.commit()
+    return jsonify(new_hotel.to_dict()), 201

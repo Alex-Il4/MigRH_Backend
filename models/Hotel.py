@@ -10,11 +10,11 @@ class Hotel(db.Model):
     # db.Column('NombreRealEnBD', db.TipoDato)
     hotelId = db.Column('hotelID', db.Integer, primary_key=True) #
     nombre_hotel = db.Column('nombre_hotel', db.String(255), nullable=False) # (DB es varchar(255))
-    descripcion = db.Column('descripcion', db.String(db.Text), nullable=True) # (DB es varchar(max), se mapea a Text en SQLAlchemy)
+    descripcion = db.Column('descripcion', db.Text, nullable=True) # (DB es varchar(max), se mapea a Text en SQLAlchemy)
     ciudad = db.Column('ciudad', db.String(255), nullable=True) # (DB es varchar(255))
     precio_por_noche = db.Column('precio_por_noche', db.Numeric(38, 2), nullable=True) # (DB es numeric(38,2))
     TipoHotel = db.Column('TipoHotel', db.String(31), nullable=False) # (DB es varchar(31))
-    servicios_exclusivos = db.Column('servicios_exclusivos', db.String(db.Text), nullable=True) # (DB es varchar(max), se mapea a Text)
+    servicios_exclusivos = db.Column('servicios_exclusivos', db.Text, nullable=True) # (DB es varchar(max), se mapea a Text)
     calificacion_estrellas = db.Column('calificacion_estrellas', db.Integer, nullable=True) #
     capacidad_maxima = db.Column('capacidad_maxima', db.Integer, nullable=True) #
     tematica = db.Column('tematica', db.String(255), nullable=True) # (Esta columna no estaba en tu modelo original)
