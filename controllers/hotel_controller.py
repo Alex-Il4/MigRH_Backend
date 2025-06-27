@@ -13,7 +13,7 @@ def get_all_hotels():
 @hotel_bp.route('/<int:hotel_id>', methods=['GET']) #Obtener un hotel por su id
 def get_hotel_id(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
-    return jsonify(hotel.to_dict())
+    return jsonify(hotel.to_dict()), 200
 
 @hotel_bp.route('/<string:ciudad>', methods=['GET']) #Obtener todos los hoteles de una ciudad
 def get_hotels_by_ciudad(ciudad):
@@ -21,7 +21,15 @@ def get_hotels_by_ciudad(ciudad):
     if not hotels:
         return jsonify({'error': 'No se encontraron hoteles'})
     hotels_data = [hotel.to_dict() for hotel in hotels]
-    return jsonify(hotels_data)
+    return jsonify(hotels_data), 200
+
+@hotel_bp.route('/filTh/<string:TipoHotel>', methods=['GET']) #Obtener todos los hoteles de un tipo de hotel
+def get_hotels_by_tipoHotel(TipoHotel):
+    hotels = Hotel.query.filter_by(TipoHotel=TipoHotel).all()
+    if not hotels:
+        return jsonify({'error': 'No se encontraron hoteles'})
+    hotels_data = [hotel.to_dict() for hotel in hotels]
+    return jsonify(hotels_data), 200
 
 @hotel_bp.route('/newhotel', methods=['POST']) #Crear un nuevo hotel
 def create_hotel():
