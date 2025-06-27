@@ -4,18 +4,18 @@ from main import db
 
 hotel_bp = Blueprint('hotel_bp', __name__, url_prefix='/api/hotels')
 
-@hotel_bp.route('/', methods=['GET'])
+@hotel_bp.route('/', methods=['GET']) #Obtener todos los hoteles
 def get_all_hotels():
     hotels = Hotel.query.all()
     hotels_data = [hotel.to_dict() for hotel in hotels]
     return jsonify(hotels_data)
 
-@hotel_bp.route('/<int:hotel_id>', methods=['GET'])
+@hotel_bp.route('/<int:hotel_id>', methods=['GET']) #Obtener un hotel por su id
 def get_hotel_id(hotel_id):
     hotel = Hotel.query.get_or_404(hotel_id)
     return jsonify(hotel.to_dict())
 
-@hotel_bp.route('/<string:ciudad>', methods=['GET'])
+@hotel_bp.route('/<string:ciudad>', methods=['GET']) #Obtener todos los hoteles de una ciudad
 def get_hotels_by_ciudad(ciudad):
     hotels = Hotel.query.filter_by(ciudad=ciudad).all()
     if not hotels:
@@ -23,7 +23,7 @@ def get_hotels_by_ciudad(ciudad):
     hotels_data = [hotel.to_dict() for hotel in hotels]
     return jsonify(hotels_data)
 
-@hotel_bp.route('/newhotel', methods=['POST'])
+@hotel_bp.route('/newhotel', methods=['POST']) #Crear un nuevo hotel
 def create_hotel():
     data = request.get_json()
     if not data:
