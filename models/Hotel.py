@@ -20,7 +20,7 @@ class Hotel(db.Model):
     calificacion_estrellas = db.Column('calificacion_estrellas', db.Integer, nullable=True) #
     capacidad_maxima = db.Column('capacidad_maxima', db.Integer, nullable=True) #
     tematica = db.Column('tematica', db.String(255), nullable=True) # (Esta columna no estaba en tu modelo original)
-    reservations = relationship('Reservation', backref='hotel_referencia', cascade="all, delete-orphan", passive_deletes=True)
+    reservations = relationship('Reservations', backref='hotel_referencia', cascade="all, delete-orphan", passive_deletes=True)
 
 
     def __repr__(self):
