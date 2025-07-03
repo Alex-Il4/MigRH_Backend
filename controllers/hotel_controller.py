@@ -73,3 +73,11 @@ def edit_hotel(hotel_id):
     hotel.tematica = data['tematica']
     db.session.commit()
     return jsonify(hotel.to_dict()), 200
+
+@hotel_bp.route('/delete/<int:hotel_id>', methods=['DELETE']) #Eliminar un hotel
+def delete_hotel(hotel_id):
+    hotel = Hotel.query.get_or_404(hotel_id)
+    db.session.delete(hotel)
+    db.session.commit()
+    return jsonify({'message': 'Hotel eliminado'}), 200
+

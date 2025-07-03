@@ -1,5 +1,7 @@
 # models/Hotel.py
 from main import db # Asumiendo que db se importa desde main.py
+from sqlalchemy.orm import relationship # Necesitas esto para las relaciones
+
 
 class Hotel(db.Model):
     # Especifica el nombre exacto de la tabla en tu base de datos SQL Server
@@ -18,6 +20,8 @@ class Hotel(db.Model):
     calificacion_estrellas = db.Column('calificacion_estrellas', db.Integer, nullable=True) #
     capacidad_maxima = db.Column('capacidad_maxima', db.Integer, nullable=True) #
     tematica = db.Column('tematica', db.String(255), nullable=True) # (Esta columna no estaba en tu modelo original)
+    reservations = relationship('Reservation', backref='hotel_referencia', cascade="all, delete-orphan", passive_deletes=True)
+
 
     def __repr__(self):
         return f'<Hotel {self.nombre_hotel}>'
