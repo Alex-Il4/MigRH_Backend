@@ -53,3 +53,23 @@ def create_hotel():
     db.session.add(new_hotel)
     db.session.commit()
     return jsonify(new_hotel.to_dict()), 201
+
+@hotel_bp.route('/edit/<int:hotel_id>', methods=['PUT']) #Editar un hotel
+def edit_hotel(hotel_id):
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Falta información'}), 400
+    if not 'nombre_hotel' in data:
+        return jsonify({'error': 'Falta información en el formulario'}), 400
+    hotel = Hotel.query.get_or_404(hotel_id)
+    hotel.nombre_hotel = data['nombre_hotel']
+    hotel.descripcion = data['descripcion']
+    hotel.ciudad = data['ciudad']
+    hotel.precio_por_noche = data['precio_por_noche']
+    hotel.TipoHotel = data['tipoHotel']
+    hotel.servicios_exclusivos = data['servicios_exclusivos']
+    hotel.calificacion_estrellas = data['calificacion_estrellas']
+    hotel.capacidad_maxima = data['capacidad_maxima']
+    hotel.tematica = data['tematica']
+    db.session.commit()
+    return jsonify(hotel.to_dict()), 200
